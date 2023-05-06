@@ -1,58 +1,47 @@
 {
   "name": "web-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/web-app/src",
   "projectType": "application",
+  "sourceRoot": "apps/web-app/src",
   "targets": {
     "build": {
-      "executor": "@nrwl/vite:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
+      "executor": "@nrwl/deno:bundle",
+      "outputs": ["dist/apps/web-app"],
       "options": {
-        "outputPath": "apps/web-app/src/client"
-      },
-      "configurations": {
-        "development": {},
-        "production": {}
+        "main": "apps/web-app/src/main.ts",
+        "outputFile": "dist/apps/web-app/main.js",
+        "denoConfig": "apps/web-app/deno.json"
       }
     },
     "serve": {
-      "executor": "@nrwl/vite:dev-server",
-      "defaultConfiguration": "development",
+      "executor": "@nrwl/deno:run",
       "options": {
-        "buildTarget": "web-app:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "web-app:build:development",
-          "hmr": true
-        },
-        "production": {
-          "buildTarget": "web-app:build:production",
-          "hmr": false
-        }
+        "buildTarget": "web-app:build",
+        "watch": true
       }
     },
-    "serve-deno": {
+    "deno-bunled": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "deno run --allow-net --allow-read --allow-write --allow-env --watch apps/web-app/src/main.ts"
+        "cwd": "apps/web-app",
+        "command": "deno bundle src/main.ts deno-bunled.js"
       }
     },
     "test": {
-      "executor": "@nrwl/vite:test",
-      "outputs": ["{projectRoot}/coverage"],
+      "executor": "@nrwl/deno:test",
+      "outputs": ["coverage/apps/web-app"],
       "options": {
-        "passWithNoTests": true
+        "coverageDirectory": "coverage/apps/web-app",
+        "denoConfig": "apps/web-app/deno.json"
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "executor": "@nrwl/deno:lint",
       "options": {
-        "lintFilePatterns": ["apps/web-app/**/*.{ts,tsx,js,jsx}"]
+        "denoConfig": "apps/web-app/deno.json"
       }
     }
   },
+  "implicitDependencies": ["cf-page"],
   "tags": []
 }

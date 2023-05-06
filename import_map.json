@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "web-js": "./libs/web-js/src/lib/web-js.ts",
+    "uuid": "https://jspm.dev/uuid",
+    "lodash": "https://jspm.dev/lodash-es"
+  }
+}

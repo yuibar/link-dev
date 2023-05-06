@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "web-ui": ["libs/web-ui/src/index.ts"],
-      "webjs": ["libs/webjs/src/index.ts"]
+      "web-js": ["libs/web-js/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
